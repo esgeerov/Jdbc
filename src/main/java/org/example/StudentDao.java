@@ -37,12 +37,8 @@ public class StudentDao {
     }
 
     public Student getStudentById(Long id) {
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String username = "Ecourse";
-        String password = "12345";
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String query = "SELECT * FROM STUDENT WHERE ID=?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "SELECT * FROM STUDENT WHERE ID=?";
+        try  {  PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -63,13 +59,8 @@ public class StudentDao {
    return null;
     }
     public Student deleteStudent(Long id){
-        String url="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="Ecourse";
-        String password="12345";
-
-       try( Connection connection=DriverManager.getConnection(url,username,password)){
            String query="DELETE FROM STUDENT WHERE ID=?";
-           PreparedStatement statement= connection.prepareStatement(query);
+        try(PreparedStatement statement= connection.prepareStatement(query)){;
            statement.setLong(1,id);
            statement.executeUpdate();
        }catch (Exception e){
@@ -78,15 +69,16 @@ public class StudentDao {
 
     return null;
     }
-    public static void updateStduent(Student student){
-        String url="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="Ecourse";
-        String password="12345";
+    public  void updateStduent(Student student){
+            String query="UPDATE STUDENT SET  name=?, surname=?,dob=?,address=?,data_date=?,phone=? WHERE ID=?";
+           try( PreparedStatement statement= connection.prepareStatement(query)){;
 
-        try( Connection connection=DriverManager.getConnection(url,username,password)){
-            String query="UPDATE STUDENT ";
-            PreparedStatement statement= connection.prepareStatement(query);
-            statement.setLong(1,student.getId());
+            statement.setLong(1, student.getId());
+            statement.setString(2, student.getName());
+            statement.setString(3, student.getSurname());
+            statement.setDate(4, student.getDob());
+            statement.setString(5, student.getAddress());
+            statement.setLong(6, student.getPhone());
             statement.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();

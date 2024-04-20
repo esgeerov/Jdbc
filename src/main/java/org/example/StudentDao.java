@@ -6,24 +6,24 @@ import java.sql.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
-public class StudentDao {
+public class  StudentDao {
     private Connection connection;
 
-    public StudentDao(){
-        String url="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="Ecourse";
-        String password="12345";
-        try(Connection connection=DriverManager.getConnection(url,password,username)){
+    public StudentDao() {
+        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String username = "Ecourse";
+        String password = "12345";
+        try (Connection connection = DriverManager.getConnection(url, password, username)) {
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public  void addStudent(Student student) {
-            String query = "INSERT INTO STUDENT(ID,NAME,SURNAME,DOB,ADDRESS,PHONE) VALUES (?,?,?,?,?,?)";
-            try(PreparedStatement statement = connection.prepareStatement(query)){
+    public void addStudent(Student student) {
+        String query = "INSERT INTO STUDENT(ID,NAME,SURNAME,DOB,ADDRESS,PHONE) VALUES (?,?,?,?,?,?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, student.getId());
             statement.setString(2, student.getName());
             statement.setString(3, student.getSurname());
@@ -60,38 +60,40 @@ public class StudentDao {
             e.printStackTrace();
         }
 
-   return null;
+        return null;
     }
-    public Student deleteStudent(Long id){
-        String url="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="Ecourse";
-        String password="12345";
 
-       try( Connection connection=DriverManager.getConnection(url,username,password)){
-           String query="DELETE FROM STUDENT WHERE ID=?";
-           PreparedStatement statement= connection.prepareStatement(query);
-           statement.setLong(1,id);
-           statement.executeUpdate();
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+    public Student deleteStudent(Long id) {
+        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String username = "Ecourse";
+        String password = "12345";
 
-    return null;
-    }
-    public static void updateStduent(Student student){
-        String url="jdbc:oracle:thin:@localhost:1521:XE";
-        String username="Ecourse";
-        String password="12345";
-
-        try( Connection connection=DriverManager.getConnection(url,username,password)){
-            String query="UPDATE STUDENT ";
-            PreparedStatement statement= connection.prepareStatement(query);
-            statement.setLong(1,student.getId());
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String query = "DELETE FROM STUDENT WHERE ID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
             statement.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void updateStduent(Student student) {
+        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String username = "Ecourse";
+        String password = "12345";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String query = "UPDATE STUDENT ";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, student.getId());
+            statement.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
 }
+

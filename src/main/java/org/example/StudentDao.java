@@ -37,12 +37,8 @@ public class  StudentDao {
     }
 
     public Student getStudentById(Long id) {
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String username = "Ecourse";
-        String password = "12345";
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "SELECT * FROM STUDENT WHERE ID=?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            try(PreparedStatement statement = connection.prepareStatement(query)){;
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -64,13 +60,8 @@ public class  StudentDao {
     }
 
     public Student deleteStudent(Long id) {
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String username = "Ecourse";
-        String password = "12345";
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "DELETE FROM STUDENT WHERE ID=?";
-            PreparedStatement statement = connection.prepareStatement(query);
+            try(PreparedStatement statement = connection.prepareStatement(query)){;
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (Exception e) {
@@ -80,14 +71,9 @@ public class  StudentDao {
         return null;
     }
 
-    public static void updateStduent(Student student) {
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String username = "Ecourse";
-        String password = "12345";
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String query = "UPDATE STUDENT ";
-            PreparedStatement statement = connection.prepareStatement(query);
+    public  void updateStduent(Student student) {
+        String query = "UPDATE STUDENT WHERE ID=?";
+           try(PreparedStatement statement = connection.prepareStatement(query)){;
             statement.setLong(1, student.getId());
             statement.executeUpdate();
         } catch (Exception e) {
